@@ -22,11 +22,9 @@ export default function LoginForm() {
     })
   }
   return (
-    <div>
-      <Button onClick={handleLogin} variant="outline" className="gap-2">
-        <SiGithub />
-        Login
-      </Button>
-    </div>
+    <Button onClick={handleLogin} variant="outline" className="gap-2">
+      <SiGithub />
+      Login
+    </Button>
   )
 }
