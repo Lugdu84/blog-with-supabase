@@ -4,6 +4,7 @@ import './globals.css'
 import { ReactNode } from 'react'
 import { ThemeProvider } from '@/components/theme-provider'
 import NavBar from '@/components/nav/navbar'
+import SessionProvider from '@/components/session-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
         </ThemeProvider>
+        <SessionProvider />
       </body>
     </html>
   )
