@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import LoginForm from './login-form'
 import { useUser } from '@/lib/store/user'
+import Profil from './profil'
 
 export default function NavBar() {
   const user = useUser((state) => state.user)
@@ -15,7 +16,7 @@ export default function NavBar() {
         </Link>
         <div className="h-1 w-0 group-hover:w-full transition-all bg-green-500" />
       </div>
-      {user ? <h1>profile</h1> : <LoginForm />}
+      {user ? <Profil /> : <LoginForm />}
     </nav>
   )
 }
