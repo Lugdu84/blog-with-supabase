@@ -1,0 +1,15 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "explorer.compactFolders": false
+}
