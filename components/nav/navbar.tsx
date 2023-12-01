@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { SiGithub } from 'react-icons/si'
-import { Button } from '../ui/button'
+import LoginForm from './login-form'
 
 export default function NavBar() {
   return (
@@ -12,10 +11,7 @@ export default function NavBar() {
         </Link>
         <div className="h-1 w-0 group-hover:w-full transition-all bg-green-500" />
       </div>
-      <Button variant="outline" className="gap-2">
-        <SiGithub />
-        Login
-      </Button>
+      <LoginForm />
     </nav>
   )
 }
