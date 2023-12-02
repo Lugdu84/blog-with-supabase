@@ -8,6 +8,7 @@ import 'highlight.js/styles/arta.css'
 import { PiTerminalThin } from 'react-icons/pi'
 import { cn } from '@/lib/utils'
 import CopyButton from './copy-button'
+import { icons } from '@/lib/icons'
 
 type MarkdownPreviewProps = {
   content: string
@@ -36,7 +37,14 @@ export default function MarkdownPreview({
         code: ({ node, className, children, ...props }) => {
           const match = /language-(\w+)/.exec(className || '')
           if (match?.length) {
-            const Icon = PiTerminalThin
+            let Icon = PiTerminalThin
+            const isMatch = Object.prototype.hasOwnProperty.call(
+              icons,
+              match[1],
+            )
+            if (isMatch) {
+              Icon = icons[match[1] as keyof typeof icons]
+            }
             const meta = node?.data as { meta?: string }
             const id = (Math.floor(Math.random() * 100) + 1).toString()
             return (
