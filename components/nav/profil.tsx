@@ -9,6 +9,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  PopoverClose,
 } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
@@ -38,14 +39,17 @@ export default function Profil() {
           <p className="text-gray-500">{user?.user_metadata?.email}</p>
         </div>
         <Link className="block" href="/dashboard">
-          <Button
-            className="w-full flex items-center justify-between"
-            variant="ghost"
-          >
-            Dashboard
-            <MdOutlineDashboard />
-          </Button>
+          <PopoverClose asChild>
+            <Button
+              variant="ghost"
+              className="w-full flex items-center justify-between"
+            >
+              Dashboard
+              <MdOutlineDashboard />
+            </Button>
+          </PopoverClose>
         </Link>
+
         <Button
           onClick={handleLogout}
           className="w-full flex items-center justify-between"
