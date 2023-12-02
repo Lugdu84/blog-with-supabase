@@ -1,3 +1,4 @@
+import { Switch } from '@/components/ui/switch'
 import ActionsTable from './actions-table'
 
 export default function BlogTable() {
@@ -11,8 +12,8 @@ export default function BlogTable() {
         </div>
         <div className="grid grid-cols-5 p-5">
           <p className="col-span-2">Blog Title</p>
-          <p>Blog Title</p>
-          <p>Blog Title</p>
+          <Switch checked={false} />
+          <Switch checked />
           <ActionsTable />
         </div>
       </div>
