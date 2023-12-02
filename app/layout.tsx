@@ -5,6 +5,7 @@ import { ReactNode } from 'react'
 import { ThemeProvider } from '@/components/theme-provider'
 import NavBar from '@/components/nav/navbar'
 import SessionProvider from '@/components/session-provider'
+import ToastProvider from '@/components/providers/toaster-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {children}
           </main>
         </ThemeProvider>
+        <ToastProvider />
         <SessionProvider />
       </body>
     </html>
