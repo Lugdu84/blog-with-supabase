@@ -22,6 +22,8 @@ export default function Profil() {
     supabase.auth.signOut()
     setUser(undefined)
   }
+
+  const isAdmin = user?.user_metadata.role === 'admin'
   return (
     <Popover>
       <PopoverTrigger>
@@ -38,17 +40,19 @@ export default function Profil() {
           <p>{user?.user_metadata?.user_name}</p>
           <p className="text-gray-500">{user?.user_metadata?.email}</p>
         </div>
-        <Link className="block" href="/dashboard">
-          <PopoverClose asChild>
-            <Button
-              variant="ghost"
-              className="w-full flex items-center justify-between"
-            >
-              Dashboard
-              <MdOutlineDashboard />
-            </Button>
-          </PopoverClose>
-        </Link>
+        {isAdmin && (
+          <Link className="block" href="/dashboard">
+            <PopoverClose asChild>
+              <Button
+                variant="ghost"
+                className="w-full flex items-center justify-between"
+              >
+                Dashboard
+                <MdOutlineDashboard />
+              </Button>
+            </PopoverClose>
+          </Link>
+        )}
 
         <Button
           onClick={handleLogout}
