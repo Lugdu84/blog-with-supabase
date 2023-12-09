@@ -1,5 +1,6 @@
 import React from 'react'
 import { EyeIcon, PencilIcon } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import DeleteAlert from './delete-alert'
 
@@ -15,10 +16,12 @@ export default function ActionsTable({ id }: ActionsTableProps) {
         Voir
       </Button>
       <DeleteAlert blogId={id} />
-      <Button variant="outline" className="flex items-center gap-2">
-        <PencilIcon />
-        Editer
-      </Button>
+      <Link href={`/dashboard/blog/edit/${id}`}>
+        <Button variant="outline" className="flex items-center gap-2">
+          <PencilIcon />
+          Editer
+        </Button>
+      </Link>
     </div>
   )
 }

@@ -1,32 +1,32 @@
 'use server'
 
-import { CookieOptions, createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { BlogFormSchemaType } from '../schema/blog'
-import { Database } from '@/types/supabase'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 
-const cookieStore = cookies()
+// const cookieStore = cookies()
+const DASHBOARD = '/dashboard'
 
-const supabase = createServerClient<Database>(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  {
-    cookies: {
-      get(name: string) {
-        return cookieStore.get(name)?.value
-      },
-      set(name: string, value: string, options: CookieOptions) {
-        cookieStore.set({ name, value, ...options })
-      },
-      remove(name: string, options: CookieOptions) {
-        cookieStore.set({ name, value: '', ...options })
-      },
-    },
-  },
-)
+// const supabase = createServerClient<Database>(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+//   {
+//     cookies: {
+//       get(name: string) {
+//         return cookieStore.get(name)?.value
+//       },
+//       set(name: string, value: string, options: CookieOptions) {
+//         cookieStore.set({ name, value, ...options })
+//       },
+//       remove(name: string, options: CookieOptions) {
+//         cookieStore.set({ name, value: '', ...options })
+//       },
+//     },
+//   },
+// )
 
 export const createBlog = async (data: BlogFormSchemaType) => {
+  const supabase = await createSupabaseServerClient()
   const { content, ...blog } = data
   const { data: resultBlog, error } = await supabase
     .from('blog')
@@ -55,9 +55,54 @@ export const createBlog = async (data: BlogFormSchemaType) => {
   }
 
   // Revalidation
-  revalidatePath('/dashboard')
+  revalidatePath(DASHBOARD)
   return JSON.stringify(contentBlog)
 }
 
-export const readBlog = async () =>
-  supabase.from('blog').select('*').order('created_at', { ascending: true })
+export const readBlog = async () => {
+  const supabase = await createSupabaseServerClient()
+  return supabase
+    .from('blog')
+    .select('*')
+    .order('created_at', { ascending: true })
+}
+
+export const deleteBlogById = async (id: string) => {
+  const supabase = await createSupabaseServerClient()
+  const { error } = await supabase.from('blog').delete().eq('id', id).single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+  revalidatePath(DASHBOARD)
+}
+
+export const updateBlogById = async (id: string, data: BlogFormSchemaType) => {
+  const supabase = await createSupabaseServerClient()
+  const { error } = await supabase
+    .from('blog')
+    .update(data)
+    .eq('id', id)
+    .select()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  revalidatePath(DASHBOARD)
+}
+
+export const readBlogContentById = async (id: string) => {
+  const supabase = await createSupabaseServerClient()
+  const { data, error } = await supabase
+    .from('blog')
+    .select('*, blog_content(*)')
+    .eq('id', id)
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
+}
