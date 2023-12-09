@@ -4,26 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { BlogFormSchemaType } from '../schema/blog'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 
-// const cookieStore = cookies()
 const DASHBOARD = '/dashboard'
-
-// const supabase = createServerClient<Database>(
-//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//   {
-//     cookies: {
-//       get(name: string) {
-//         return cookieStore.get(name)?.value
-//       },
-//       set(name: string, value: string, options: CookieOptions) {
-//         cookieStore.set({ name, value, ...options })
-//       },
-//       remove(name: string, options: CookieOptions) {
-//         cookieStore.set({ name, value: '', ...options })
-//       },
-//     },
-//   },
-// )
 
 export const createBlog = async (data: BlogFormSchemaType) => {
   const supabase = await createSupabaseServerClient()
