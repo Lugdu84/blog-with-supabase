@@ -58,3 +58,6 @@ export const createBlog = async (data: BlogFormSchemaType) => {
   revalidatePath('/dashboard')
   return JSON.stringify(contentBlog)
 }
+
+export const readBlog = async () =>
+  supabase.from('blog').select('*').order('created_at', { ascending: true })
