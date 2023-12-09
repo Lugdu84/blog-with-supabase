@@ -87,3 +87,35 @@ export const readBlogContentById = async (id: string) => {
 
   return data
 }
+
+export const updateBlogDetailById = async (
+  id: string,
+  data: BlogFormSchemaType,
+) => {
+  const supabase = await createSupabaseServerClient()
+  const { content, ...blog } = data
+
+  const { error } = await supabase
+    .from('blog')
+    .update(blog)
+    .eq('id', id)
+    .select()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  const { error: contentError } = await supabase
+    .from('blog_content')
+    .update({
+      content,
+    })
+    .eq('blog_id', id)
+    .select()
+
+  if (contentError) {
+    throw new Error(contentError.message)
+  }
+
+  revalidatePath(`${DASHBOARD}/blog/edit/${id}`)
+}

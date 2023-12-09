@@ -1,4 +1,5 @@
 import { readBlogContentById } from '@/lib/actions/blog'
+import EditForm from './_components/edit-form'
 
 type BlogPageEditProps = {
   params: {
@@ -11,7 +12,9 @@ export default async function BlogPageEdit({
 }: BlogPageEditProps) {
   const data = await readBlogContentById(id)
 
-  console.log(data)
-
-  return <div>{id}</div>
+  return (
+    <div>
+      <EditForm blog={data} />
+    </div>
+  )
 }
