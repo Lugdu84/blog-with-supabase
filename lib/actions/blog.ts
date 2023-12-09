@@ -45,6 +45,14 @@ export const readBlog = async () => {
   return supabase
     .from('blog')
     .select('*')
+    .eq('is_published', true)
+    .order('created_at', { ascending: true })
+}
+export const readBlogAdmin = async () => {
+  const supabase = await createSupabaseServerClient()
+  return supabase
+    .from('blog')
+    .select('*')
     .order('created_at', { ascending: true })
 }
 
@@ -71,6 +79,8 @@ export const updateBlogById = async (id: string, data: BlogFormSchemaType) => {
   }
 
   revalidatePath(DASHBOARD)
+  revalidatePath(`/blog/${id}`)
+  revalidatePath('blog')
 }
 
 export const readBlogContentById = async (id: string) => {
@@ -118,4 +128,17 @@ export const updateBlogDetailById = async (
   }
 
   revalidatePath(`${DASHBOARD}/blog/edit/${id}`)
+  revalidatePath(`/blog/${id}`)
+  revalidatePath('blog')
+}
+
+export const getContentBlogById = async (id: string) => {
+  const supabase = await createSupabaseServerClient()
+  const { data } = await supabase
+    .from('blog_content')
+    .select('content')
+    .eq('blog_id', id)
+    .single()
+
+  return data
 }

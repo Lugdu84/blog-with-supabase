@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 import ActionsTable from './actions-table'
-import { readBlog, updateBlogById } from '@/lib/actions/blog'
+import { readBlogAdmin, updateBlogById } from '@/lib/actions/blog'
 import SwithForm from './switch-form'
 import { BlogFormSchemaType } from '@/lib/schema/blog'
 
 export default async function BlogTable() {
-  const { data: blogs } = await readBlog()
+  const { data: blogs } = await readBlogAdmin()
 
   return (
     <div className=" overflow-x-auto">

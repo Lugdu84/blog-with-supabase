@@ -10,11 +10,13 @@ type ActionsTableProps = {
 
 export default function ActionsTable({ id }: ActionsTableProps) {
   return (
-    <div className="flex items-center gap-2 flex-wrap">
-      <Button variant="outline" className="flex items-center gap-2">
-        <EyeIcon />
-        Voir
-      </Button>
+    <div className="flex items-center gap-2 flex-wrap md:flex-row">
+      <Link href={`/blog/${id}`}>
+        <Button variant="outline" className="flex items-center gap-2">
+          <EyeIcon />
+          Voir
+        </Button>
+      </Link>
       <DeleteAlert blogId={id} />
       <Link href={`/dashboard/blog/edit/${id}`}>
         <Button variant="outline" className="flex items-center gap-2">
