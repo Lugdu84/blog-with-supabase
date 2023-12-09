@@ -64,6 +64,8 @@ export const deleteBlogById = async (id: string) => {
     throw new Error(error.message)
   }
   revalidatePath(DASHBOARD)
+  revalidatePath(`/blog/${id}`)
+  revalidatePath('blog')
 }
 
 export const updateBlogById = async (id: string, data: BlogFormSchemaType) => {
