@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
+import { headers } from 'next/headers'
 import { IBlog } from '@/types/blog'
 import BlogContent from './_components/blog-content'
 import MainSkeleton from '@/components/skeletton/main-skeleton'
@@ -12,9 +13,11 @@ type BlogPageProps = {
 }
 
 export default async function BlogPage({ params: { id } }: BlogPageProps) {
-  const { data: blog } = (await fetch(
-    `${process.env.SITE_URL}/api/blog?id=${id}`,
-  ).then((res) => res.json())) as { data: IBlog }
+  const header = headers()
+  const host = header.get('host')
+  const { data: blog } = (await fetch(`https://${host}/api/blog?id=${id}`).then(
+    (res) => res.json(),
+  )) as { data: IBlog }
 
   if (!blog) {
     notFound()
