@@ -28,16 +28,18 @@ export const POST = async (request: Request) => {
     if (subscription.data.length) {
       const sub = subscription.data[0]
       // call to supabase to user table
-      const data = {
+      const subscriptionData = {
         subscription_status: sub.status === 'active',
         stripe_customer_id: customer.id,
         stripe_subscription_id: sub.id,
         email: customer.email as string,
       }
-      onSuccessSubscription(data)
+      const { error } = await onSuccessSubscription(subscriptionData)
+      if (error) {
+        return new NextResponse(error.message, { status: 500 })
+      }
     }
   }
-
   return new NextResponse('Success', { status: 200 })
 }
 
