@@ -1,6 +1,10 @@
+import dynamic from 'next/dynamic'
 import MarkdownPreview from '@/components/markdown/markdown-preview'
-import Checkout from '@/components/stripe/checkout'
 import { getContentBlogById } from '@/lib/actions/blog'
+
+const Checkout = dynamic(() => import('@/components/stripe/checkout'), {
+  ssr: false,
+})
 
 type BlogContentProps = {
   id: string
