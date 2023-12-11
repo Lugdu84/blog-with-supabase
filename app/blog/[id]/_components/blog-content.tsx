@@ -1,4 +1,5 @@
 import MarkdownPreview from '@/components/markdown/markdown-preview'
+import Checkout from '@/components/stripe/checkout'
 import { getContentBlogById } from '@/lib/actions/blog'
 
 type BlogContentProps = {
@@ -8,8 +9,8 @@ type BlogContentProps = {
 export default async function BlogContent({ id }: BlogContentProps) {
   const data = await getContentBlogById(id)
 
-  if (!data) {
-    return null
+  if (!data?.content) {
+    return <Checkout />
   }
 
   return <MarkdownPreview content={data.content} />
