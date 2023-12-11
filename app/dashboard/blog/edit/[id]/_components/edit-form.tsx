@@ -12,7 +12,6 @@ type BlogFormProps = {
 
 export default function EditForm({ blog }: BlogFormProps) {
   const handleUpdate = async (data: BlogFormSchemaType) => {
-    console.log('update')
     if (!blog) return
     await updateBlogDetailById(blog.id, data)
       .then(() => {

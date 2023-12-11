@@ -11,5 +11,5 @@ export type IBlogDetail = IBlog & {
   blog_content: {
     blog_id: string
     content: string
-  }
+  } | null
 }
