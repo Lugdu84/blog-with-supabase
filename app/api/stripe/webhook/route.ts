@@ -20,9 +20,6 @@ export const POST = async (request: Request) => {
     return new NextResponse(`Webhook Error : ${error.message}`, { status: 400 })
   }
 
-  // Handle the event
-
-  const session = event.data.object as Stripe.Checkout.Session
   if (event.type === 'customer.updated') {
     const customer = event.data.object as Stripe.Customer
     const subscription = await stripe.subscriptions.list({
