@@ -25,10 +25,9 @@ export default function Checkout() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(window.origin, pahtname)
     startTransition(async () => {
       const data = JSON.parse(
-        await checkout(user.email!, `${window.origin}/pahtname`),
+        await checkout(user.email!, `${window.origin}${pahtname}`),
       )
       const stripe = await loadStripe(
         process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,
@@ -41,7 +40,6 @@ export default function Checkout() {
   return (
     <form
       className="h-96 w-full flex items-center justify-center"
-      action=""
       onSubmit={handleSubmit}
     >
       <Button
