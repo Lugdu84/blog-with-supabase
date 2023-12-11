@@ -2,7 +2,6 @@
 
 import { BackpackIcon, Loader2Icon } from 'lucide-react'
 import { useTransition } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { manageBillingPortal } from '@/lib/actions/stripe'
