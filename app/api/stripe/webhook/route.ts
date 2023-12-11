@@ -21,7 +21,7 @@ export const POST = async (request: Request) => {
   }
 
   if (event.type === 'customer.updated') {
-    const customer = event.data.object as Stripe.Customer
+    const customer = event.data.object
     const subscription = await stripe.subscriptions.list({
       customer: customer.id,
     })
@@ -40,6 +40,13 @@ export const POST = async (request: Request) => {
       }
     }
   }
+  if (event.type === 'customer.subscription.deleted') {
+    const deleteSub = event.data.object
+    const { error } = await onCancelSubscription(deleteSub.id)
+    if (error) {
+      return new NextResponse(error.message, { status: 500 })
+    }
+  }
   return new NextResponse('Success', { status: 200 })
 }
 
@@ -49,6 +56,19 @@ type dataSubscription = {
   stripe_subscription_id: string
   email: string
 }
+
+const onCancelSubscription = async (stripe_subscription_id: string) => {
+  const supabaseAdmin = await createSupabaseAdmin()
+  return supabaseAdmin
+    .from('users')
+    .update({
+      subscription_status: false,
+      stripe_subscription_id: null,
+      stripe_customer_id: null,
+    })
+    .eq('stripe_subscription_id', stripe_subscription_id)
+}
+
 const onSuccessSubscription = async ({
   subscription_status,
   stripe_customer_id,

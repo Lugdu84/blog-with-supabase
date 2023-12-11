@@ -8,7 +8,7 @@ export const checkout = async (email: string, redirectTo: string) =>
   JSON.stringify(
     await stripe.checkout.sessions.create({
       success_url: redirectTo,
-      cancel_url: process.env.SITE_URL!,
+      cancel_url: redirectTo,
       customer_email: email,
       line_items: [
         {
@@ -17,5 +17,16 @@ export const checkout = async (email: string, redirectTo: string) =>
         },
       ],
       mode: 'subscription',
+    }),
+  )
+
+export const manageBillingPortal = async (
+  customerId: string,
+  redirectTo: string,
+) =>
+  JSON.stringify(
+    await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: redirectTo,
     }),
   )

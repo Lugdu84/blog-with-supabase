@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase'
+import ManageBilling from '@/components/stripe/manage-billing'
 
 export default function Profil() {
   const user = useUser((state) => state.user)
@@ -20,26 +21,32 @@ export default function Profil() {
 
   const handleLogout = () => {
     supabase.auth.signOut()
-    setUser(undefined)
+    setUser(null)
   }
 
-  const isAdmin = user?.user_metadata.role === 'admin'
+  const isAdmin = user?.role === 'admin'
+  const isSub = user?.stripe_customer_id
   return (
     <Popover>
       <PopoverTrigger>
         <Image
           width={64}
           height={64}
-          src={user?.user_metadata.avatar_url}
-          alt={user?.user_metadata.user_name}
+          src={user?.image_url as string}
+          alt={user?.display_name || ''}
           className="rounded-full ring-2 ring-green-500"
         />
       </PopoverTrigger>
       <PopoverContent className="p-2 space-y-3 divide-y">
         <div className="px-4 text-sm">
-          <p>{user?.user_metadata?.user_name}</p>
-          <p className="text-gray-500">{user?.user_metadata?.email}</p>
+          <p>{user?.display_name}</p>
+          <p className="text-gray-500">{user?.email}</p>
         </div>
+        {isSub && !isAdmin && (
+          <PopoverClose asChild>
+            <ManageBilling curstomerId={isSub} />
+          </PopoverClose>
+        )}
         {isAdmin && (
           <Link className="block" href="/dashboard">
             <PopoverClose asChild>

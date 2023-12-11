@@ -8,6 +8,7 @@ import Profil from './profil'
 
 export default function NavBar() {
   const user = useUser((state) => state.user)
+
   return (
     <nav className="flex items-center justify-between">
       <div className="group">

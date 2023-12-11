@@ -1,13 +1,13 @@
-import { User } from '@supabase/supabase-js'
 import { create } from 'zustand'
+import { IUser } from '@/types/user'
 
 interface UserState {
-  user: User | undefined
+  user: IUser | null
   // eslint-disable-next-line no-unused-vars
-  setUser: (user: User | undefined) => void
+  setUser: (user: IUser | undefined) => void
 }
 
 export const useUser = create<UserState>()((set) => ({
-  user: undefined,
+  user: null,
   setUser: (user) => set({ user }),
 }))
