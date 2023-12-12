@@ -6,7 +6,6 @@ import { Metadata } from 'next'
 import { IBlog } from '@/types/blog'
 import BlogContent from './_components/blog-content'
 import MainSkeleton from '@/components/skeletton/main-skeleton'
-import { getContentBlogById } from '@/lib/actions/blog'
 
 type BlogPageProps = {
   params: {
