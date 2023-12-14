@@ -259,7 +259,6 @@ export default function FormBlog({ onHandleSubmit, blog }: FormBlogProps) {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
         </form>
       </Form>
     </div>
